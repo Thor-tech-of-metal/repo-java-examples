@@ -16,3 +16,9 @@
 .shell-project-java/project
 .shell-project-java/target
 
+.java8Examples/.idea
+.java8Examples/project
+.java8Examples/target
+.java8Examples/build/classes
+.java8Examples/.gradle
+
