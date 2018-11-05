@@ -89,6 +89,14 @@ public class HigherOderFunction<T,U>{
 assertEquals(higherOderFunction.convertTo(3, x -> new Long(x * x)), new Long(9));
 ```
 
+#### Streams collections remember
+
+1) List to Stream
+```
+final List<Integer> myList = new ArrayList<Integer>();
+final Stream<Integer> myStream = myList.stream();
+```
+
 mapToIn
 Arrays.stream 
 peek
