@@ -85,6 +85,8 @@ public class HigherOderFunction<T,U>{
 	}
 
 }
+// how to use it 
+assertEquals(higherOderFunction.convertTo(3, x -> new Long(x * x)), new Long(9));
 ```
 
 mapToIn
