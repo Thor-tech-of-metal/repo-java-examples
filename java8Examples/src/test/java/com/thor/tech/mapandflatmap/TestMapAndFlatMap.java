@@ -1,6 +1,5 @@
 package com.thor.tech.mapandflatmap;
 
-import com.thor.tech.mapandflatmap.MapAndFlatMap;
 import org.junit.*;
 
 import java.util.Arrays;
@@ -55,7 +54,7 @@ public class TestMapAndFlatMap {
         final List<List<String>> list = Arrays.asList( Arrays.asList("1","2","3"), Arrays.asList("2","2"));
         final Optional<Integer> expectedResult = Optional.of(10);
 
-        assertEquals(expectedResult, mapAndFlatMap.flaMaptSum( list));
+        assertEquals(expectedResult, mapAndFlatMap.flaMapSum( list));
     }
 
 

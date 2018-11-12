@@ -24,7 +24,7 @@ public class MapAndFlatMap {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Integer> flaMaptSum(List<List<String>> list) {
+    public Optional<Integer> flaMapSum(List<List<String>> list) {
 
         return list.stream()
                 .flatMap(listParam -> listParam.stream())
