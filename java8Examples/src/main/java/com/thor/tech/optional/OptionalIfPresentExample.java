@@ -1,4 +1,4 @@
-package com.thor.tech.java8.examples.optional;
+package com.thor.tech.optional;
 
 import java.util.Optional;
 

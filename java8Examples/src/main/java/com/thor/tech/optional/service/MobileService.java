@@ -1,8 +1,8 @@
-package com.thor.tech.java8.examples.optional.service;
+package com.thor.tech.optional.service;
 
-import com.thor.tech.java8.examples.optional.model.DisplayFeatures;
-import com.thor.tech.java8.examples.optional.model.Mobile;
-import com.thor.tech.java8.examples.optional.model.ScreenResolution;
+import com.thor.tech.optional.model.DisplayFeatures;
+import com.thor.tech.optional.model.Mobile;
+import com.thor.tech.optional.model.ScreenResolution;
 
 import java.util.Optional;
 

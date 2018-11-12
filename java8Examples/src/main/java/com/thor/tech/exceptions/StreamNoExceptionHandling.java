@@ -1,4 +1,4 @@
-package com.thor.tech.java8.examples.javaslang.exceptions;
+package com.thor.tech.exceptions;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

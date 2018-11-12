@@ -1,4 +1,4 @@
-package com.thor.tech.java8.examples.mapandflatmap;
+package com.thor.tech.mapandflatmap;
 
 import java.util.List;
 import java.util.Optional;

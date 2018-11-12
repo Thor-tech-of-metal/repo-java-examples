@@ -97,8 +97,51 @@ final List<Integer> myList = new ArrayList<Integer>();
 final Stream<Integer> myStream = myList.stream();
 ```
 
-mapToIn
-Arrays.stream 
-peek
+2)  Convert an array to stream using Arrays
+```
+final Integer[] myArray = {1, 5, 8};
+final Stream<Integer> myStream = Arrays.stream(myArray);
 
-https://www.sitepoint.com/java-8-streams-filter-map-reduce/
+final myList = Arrays.asList(8)
+```
+
+3) collect from Stream
+```
+final Integer[] myArray = {1, 5, 8};
+final Stream<Integer> myStream = Arrays.stream(myArray);
+final List<Integer> list = myStream.collect(Collectors.toList());
+
+```
+4) myNewStream.toArray
+
+```
+final Stream<Integer> myStream = myList.stream();
+final String[] myNewArray = myNewStream.toArray(String[]::new);
+```
+
+5) stream<T> and [GENERIC_VALUE]stream
+```
+IntStream.of(1, 2, 3);
+
+IntStream.iterate(0, i -> i + 2).limit(3);  result ->  0, 2, 4
+
+```
+
+6) The Stream.peek(Consumer) method expects a Consumer, which is essentially a block of code that accepts a single argument and returns nothing. 
+    peek() is normally used for debug.
+```
+The Stream.peek(Consumer) 
+```
+
+#### Map and flatMap in the world of java
+
+* T.map(F) always return T
+* T.flatMap(F) always return T
+
+* stream.flatMapTo[GENERIC] always return [GENERIC]Stream
+* stream.mapTo[GENERIC] always return [GENERIC]Stream
+
+* mapToObject will simply return a Stream of the type that the mapping returns.
+```
+final Stream<Color> stream = IntStream.range(1, 5).mapToObj(i -> getColor(i));
+```

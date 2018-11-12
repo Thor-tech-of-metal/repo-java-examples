@@ -1,5 +1,6 @@
-package com.thor.tech.java8.examples.mapandflatmap;
+package com.thor.tech.mapandflatmap;
 
+import com.thor.tech.mapandflatmap.MapAndFlatMap;
 import org.junit.*;
 
 import java.util.Arrays;
