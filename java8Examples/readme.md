@@ -1,6 +1,12 @@
 # Notes of java 8 examples
  
 
+
+#### Lambda expressions
+
+This expressions has been created to avoid the use of anonymous inner classes.
+
+ 
 #### function interface
 
 @FunctionalInterface is used to define the signatures of a lambda esxpression.
@@ -12,9 +18,81 @@ interface FunctionCalculationInterface {
 	Integer calculate(int param);
 }
 
-
 final FunctionCalculationInterface f  = (int x)->x*x;
+assertEquals( f.calculate(3), new Integer (9) );
 ```
+
+#### function interfaces
+All interfaces are in java.util.function
+
+* Predicate: The Predicate interface has an abstract method test which gives a Boolean value as a result for the specified argument.  
+
+* Function: The Function interface has an abstract method apply which takes argument of type T and returns a result of type R. 
+```
+public interface Function<T, R> { … }
+
+```
+
+#### UnaryOperator<T>
+
+It is used when a functions whose argument and return value are of this same type. Similar to  Function<Integer,Integer>
+
+
+####  BinaryOperator
+
+In Java, a function that receives two arguments of the same type is called BinaryOperator.
+
+BinaryOperator<Integer> sum = (a,b) -> a + b;
+Integer res = sum.apply(1,2); // yields 3
+
+
+#### BiFunction: 
+```  
+public interface BiFunction<T, U, R> {}
+```
+
+#### BiPredicate
+```
+BiPredicate<Integer, String> condition = (i,s)-> i>20 && s.startsWith("R"); always return boolean
+```
+
+
+#### The use of ::
+
+:: will return the function definition or a pointer to the declared function.
+We can manipulate functions without evaluating them.
+
+```
+public class Utils {
+   public static Integer add1(Integer x) { return x + 1; }
+}
+
+Function<Integer,Integer> add1 = Utils::add1;
+Integer two = add1.apply(1); //yields 2
+```
+
+
+#### More thann two parameters
+
+```
+@FunctionalInterface
+public interface TriFunction<T,U,S, R> {
+    /**
+    * Applies this function to the given arguments.
+    * @param t the first function argument
+    * @param u the second function argument
+    * @param s the third function argument
+    * @return the function result
+    */
+    R apply(T t, U u, S s);
+}
+
+final TriFunction volume = (x,y,z) -> x*y*z
+
+volume.apply(2.4, 5.3, 10.4)
+
+```
+
 
 #### default method
 
@@ -39,36 +117,10 @@ In java currying is resolved by using Function interfaces. We can extend pre-exi
 create your own interfaces functions with more complex logic such us pass another functions as parameters
 
 ```
-@FunctionalInterface
-public interface CurryingBiFunction<Param1, Param2, Return> extends BiFunction<Param1, Param2, Return> {
+final Function<Integer, Function<Integer, Integer>> sum = x -> y -> x + y;
+final Function<Integer, Integer> plus5 = sum.apply(10);
+final Integer res = plus5.apply(5); //yields 15
 
-	default Function<Param2, Return> curryFirstParam(Param1 firstParam) {
-		return u -> apply(firstParam, u);
-	}
-
-	default Function<Param1, Return> currySecondParam(Param2 secondParam) {
-
-		return t -> apply(t, secondParam);
-	}
-
-	// compose functions to have pure function as parameters
-
-	default <V> CurryingBiFunction<V, Param2, Return> composeFirstParameter(Function<? super V, ? extends Param1> before) {
-		return (v, u) -> apply(before.apply(v), u);
-	}
-
-	default <V> CurryingBiFunction<Param1, V, Return> composeSecondParameter(Function<? super V, ? extends Param2> before) {
-		return (t, v) -> apply(t, before.apply(v));
-	}
-}
-
-// how to use it 
-final Function<Double, Double> functionCalculator = converter
-    .composeSecondParameter((Double n) -> n + 5)
-    .currySecondParam(2.0);
-    
-    Double value = functionCalculator.functionCalculator.apply(10.0);
-    value is  (2+5)* 10 = 70
 ```
 
  
@@ -138,10 +190,142 @@ The Stream.peek(Consumer)
 * T.map(F) always return T
 * T.flatMap(F) always return T
 
+* java has map().orElse()
+
 * stream.flatMapTo[GENERIC] always return [GENERIC]Stream
 * stream.mapTo[GENERIC] always return [GENERIC]Stream
 
 * mapToObject will simply return a Stream of the type that the mapping returns.
+Convert from stream[T] in to another stream[B].
+
 ```
 final Stream<Color> stream = IntStream.range(1, 5).mapToObj(i -> getColor(i));
 ```
+From Stream[Intege] to Stream [Color]
+
+
+#### Flat a List of List to a Flat List
+
+```
+public List<String> flatListOfList(List<List<String>> list){
+
+        return list.stream()
+                .flatMap(listParam -> listParam.stream())
+                .collect(Collectors.toList());
+    }
+```
+
+### List of List flat in one number 
+
+```
+public Optional<Integer> flaMapSum(List<List<String>> list) {
+
+        return list.stream()
+                .flatMap(listParam -> listParam.stream())
+                    .map(element -> Integer.valueOf(element))
+                        .reduce((value1,value2) -> value1 + value2);
+    }
+    
+```
+
+### Sum each values of the sublist and produce a new list
+
+Arrays.asList( Arrays.asList("1","2","3"), Arrays.asList("2","2"));
+
+```
+public List<Optional<Integer>> mapSum(List<List<String>> list) {
+
+         return list.stream()
+                    .map(listParam -> listParam.stream()
+                        .map( element -> Integer.valueOf(element) )
+                            .reduce((value1,value2) -> value1 + value2)
+                    ).collect(Collectors.toList());
+
+    }
+```
+
+
+### Why order matters
+
+The next example consists of two intermediate operations map and filter and the terminal operation forEach. 
+Let's once again inspect how those operations are being executed:
+
+```
+Stream.of("d2", "a2", "b1", "b3", "c")
+    .map(s -> {
+        System.out.println("map: " + s);
+        return s.toUpperCase();
+    })
+    .filter(s -> {
+        System.out.println("filter: " + s);
+        return s.startsWith("A");
+    })
+    .forEach(s -> System.out.println("forEach: " + s));
+
+// map:     d2
+// filter:  D2
+// map:     a2
+// filter:  A2 (found something for the final collectt in the filter)
+// forEach: A2
+// map:     b1
+// filter:  B1
+// map:     b3
+// filter:  B3
+// map:     c
+// filter:  C
+
+``` 
+
+### Stateless Intermediate Operations 
+
+Stateless intermediate operations are the opposite of stateful and do not store any state across passes. 
+This not only improves the performance of these operations, which include among others filter(), map(), findAny(), it also helps in executing the Stream operation invocations in parallel as there is no information to be shared, or any order to be maintained, between these invocations or passes. 
+These are lazy representation and are donde in memory.
+
+
+### Terminal Operations
+
+Terminal operations are responsible for giving the ‘final’ output for a Stream in operation, and in the process they terminate a Stream. Terminal Operations thus do not return a Stream as their output.  Terminal operation are executed at the end. For example:
+ * forEach
+ * forEachOrdered
+ * toArray
+ * reduce
+ * collect
+ * min /max
+ * count
+ * anyMatch
+ * allMatch
+ * noneMatch
+ * findFirst    
+ * findAny
+### List Java-8 Streams intermediate operations.
+
+* filter()
+* map()
+* flatMap()
+* distinct()
+* sorted()
+* peek()
+* limit()
+* skip()
+
+#### Optional 
+
+* Optional.of("test") yo create an optional of String. It will not handle the case tha String can be null
+
+* Use optional to wrap possible null pointer exceptions 
+
+    Optional.ofNullable( value.toUpperCase()) when value can be null.
+
+* Optional.empty(); is Optional.empty();
+
+* Map an optional get an Optional 
+optional.map(value -> value.toUpperCase()); --> Optional.of(value)
+
+* FlatMap an Optional remove the Optional
+ 
+    optional.flatMap(value ->  value.toUpperCase()); --> value
+    
+
+
+
