@@ -303,7 +303,7 @@ Terminal operations are responsible for giving the ‘final’ output for a Stre
 * filter()
 * map()
 * flatMap()
-* distinct()
+* distinct() : remove duplicated items in a stream of data.
 * sorted()
 * peek()
 * limit()
