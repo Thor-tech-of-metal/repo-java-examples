@@ -2,19 +2,21 @@
 2)  Hacer generics en metodos ejemplos tipo como en scala 
 
 
-
+```
 public static <T> T convertGenericValue(Object from) {
         return MAPPER.convertValue(from, getNewTypeReference());
     }
 
-    public static final <T> TypeReference<T> getNewTypeReference() {
+public static final <T> TypeReference<T> getNewTypeReference() {
         return new TypeReference<T>() {
         };
-    }
+}
+````
 
 Examples
 =========
 
+```
 private static <T> List<T> pushBack(List<T> list, Class<T> typeKey) throws Exception {
     list.add(typeKey.getConstructor().newInstance());
     return list;
@@ -22,3 +24,4 @@ private static <T> List<T> pushBack(List<T> list, Class<T> typeKey) throws Excep
         
 List<String> strings = new ArrayList<String>();
 pushBack(strings, String.class);
+```
