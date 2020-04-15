@@ -11,3 +11,14 @@ public static <T> T convertGenericValue(Object from) {
         return new TypeReference<T>() {
         };
     }
+
+Examples
+=========
+
+private static <T> List<T> pushBack(List<T> list, Class<T> typeKey) throws Exception {
+    list.add(typeKey.getConstructor().newInstance());
+    return list;
+}
+        
+List<String> strings = new ArrayList<String>();
+pushBack(strings, String.class);
