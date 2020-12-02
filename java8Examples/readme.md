@@ -215,6 +215,16 @@ public List<String> flatListOfList(List<List<String>> list){
     }
 ```
 
+or
+
+```
+public <T> List<T> flattenListOfListsStream(List<List<T>> list) {
+    return list.stream()
+      .flatMap(Collection::stream)
+      .collect(Collectors.toList());    
+}
+```
+
 ### List of List flat in one number 
 
 ```
