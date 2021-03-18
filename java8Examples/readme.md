@@ -336,6 +336,12 @@ optional.map(value -> value.toUpperCase()); --> Optional.of(value)
  
     optional.flatMap(value ->  value.toUpperCase()); --> value
     
+* Remove an Optional 
+```
+// when final Optional<List<String>> ids ....
+final List<String> listOfIds = ids.orElse(Collections.emptyList());
+```
+    
 
 
 
