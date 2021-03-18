@@ -340,6 +340,9 @@ optional.map(value -> value.toUpperCase()); --> Optional.of(value)
 ```
 // when final Optional<List<String>> ids ....
 final List<String> listOfIds = ids.orElse(Collections.emptyList());
+or 
+final List<String> listOfIds = ids.map(myIds-> myIds).orElse(Collections.emptyList());
+
 ```
     
 
