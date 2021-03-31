@@ -143,6 +143,12 @@ assertEquals(higherOderFunction.convertTo(3, x -> new Long(x * x)), new Long(9))
 
 #### Streams collections remember
 
+0) Classic way to create a list 
+```
+String[] array = {"a", "b", "c", "d", "e"};
+List<String> list = Arrays.asList(array);
+```
+
 1) List to Stream
 ```
 final List<Integer> myList = new ArrayList<Integer>();
