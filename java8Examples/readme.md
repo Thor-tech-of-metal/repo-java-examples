@@ -72,6 +72,19 @@ Integer two = add1.apply(1); //yields 2
 ```
 
 
+For instance the following expression can be re-written like 
+```
+public List<UUID> getListUUID() {
+        return listOfIds.stream().map(id -> UUID.fromString(id)).collect(Collectors.toList());
+}
+```
+
+```
+public List<UUID> getListUUID() {
+        return listOfIds.stream().map(UUID::fromString).collect(Collectors.toList());
+}
+```
+
 #### More thann two parameters
 
 ```
