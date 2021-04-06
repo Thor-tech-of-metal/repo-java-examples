@@ -57,34 +57,6 @@ BiPredicate<Integer, String> condition = (i,s)-> i>20 && s.startsWith("R"); alwa
 ```
 
 
-#### The use of ::
-
-:: will return the function definition or a pointer to the declared function.
-We can manipulate functions without evaluating them.
-
-```
-public class Utils {
-   public static Integer add1(Integer x) { return x + 1; }
-}
-
-Function<Integer,Integer> add1 = Utils::add1;
-Integer two = add1.apply(1); //yields 2
-```
-
-
-For instance the following expression can be re-written like 
-```
-public List<UUID> getListUUID() {
-        return listOfIds.stream().map(id -> UUID.fromString(id)).collect(Collectors.toList());
-}
-```
-
-```
-public List<UUID> getListUUID() {
-        return listOfIds.stream().map(UUID::fromString).collect(Collectors.toList());
-}
-```
-
 #### More thann two parameters
 
 ```
@@ -105,6 +77,37 @@ final TriFunction volume = (x,y,z) -> x*y*z
 volume.apply(2.4, 5.3, 10.4)
 
 ```
+
+#### The use of ::
+
+:: will return the function definition or a pointer to the declared function.
+We can manipulate functions without evaluating them.
+
+
+For instance the following expression can be re-written like 
+```
+public List<UUID> getListUUID() {
+        return listOfIds.stream().map(id -> UUID.fromString(id)).collect(Collectors.toList());
+}
+```
+
+```
+public List<UUID> getListUUID() {
+        return listOfIds.stream().map(UUID::fromString).collect(Collectors.toList());
+}
+```
+
+```
+public class Utils {
+   public static Integer add1(Integer x) { return x + 1; }
+}
+
+Function<Integer,Integer> add1 = Utils::add1;
+Integer two = add1.apply(1); //yields 2
+```
+
+
+
 
 
 #### default method
