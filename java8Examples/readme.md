@@ -163,6 +163,9 @@ assertEquals(higherOderFunction.convertTo(3, x -> new Long(x * x)), new Long(9))
 ```
 String[] array = {"a", "b", "c", "d", "e"};
 List<String> list = Arrays.asList(array);
+
+private List<String> caseIds =  Arrays.asList(new String[] {"1","2"});
+
 ```
 
 1) List to Stream
